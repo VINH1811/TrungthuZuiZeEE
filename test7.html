@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiệp Trung Thu - Ánh Trăng & Lời Chúc</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #0b0c2a 0%, #000 100%);
+    min-height: 100vh;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    perspective: 500px;
+    transform-style: preserve-3d;
+  }
+
+  /* 🌕 Mặt trăng */
+  .moon {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    width: 40vw;
+    height: 40vw;
+    max-width: 270px;
+    max-height: 270px;
+    background: radial-gradient(circle, #fffde7 0%, #ffe066 60%, #fdd835 100%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 40px 15px rgba(255, 250, 180, 0.7), 0 0 100px 40px rgba(255, 250, 180, 0.3);
+    z-index: 1;
+  }
+
+  /* 👸 Hằng Nga */
+  .hangnga {
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    width: 60vw;
+    max-width: 550px;
+    transform: translate(-50%, 10px) translate3d(0, 0, 0);
+    z-index: 5;
+    filter: drop-shadow(0 0 15px rgba(255, 200, 150, 0.6));
+    pointer-events: none;
+    transition: transform 0.1s ease-out;
+  }
+/* 💫 Hiệu ứng Hằng Nga bay lượn rõ hơn */
+@keyframes hangNgaFloat {
+  0% {
+    transform: translate(-50%, 10px) scale(1) rotate(0deg);
+  }
+  20% {
+    transform: translate(-56%, -20px) scale(1.05) rotate(-3deg);
+  }
+  40% {
+    transform: translate(-45%, -35px) scale(1.07) rotate(2deg);
+  }
+  60% {
+    transform: translate(-54%, -10px) scale(1.04) rotate(-2deg);
+  }
+  80% {
+    transform: translate(-47%, -25px) scale(1.06) rotate(3deg);
+  }
+  100% {
+    transform: translate(-50%, 10px) scale(1) rotate(0deg);
+  }
+}
+
+.hangnga {
+  animation: hangNgaFloat 5s ease-in-out infinite;
+}
+
+  /* ☁️ Mây viền */
+  .decor {
+    position: absolute;
+    z-index: 4;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 200, 0.4));
+    transition: transform 0.2s ease-out;
+    pointer-events: none;
+  }
+  .decor.top-left {
+    top: 0;
+    left: 0;
+    width: 40vw;
+    max-width: 400px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=') no-repeat center/cover;
+  }
+  .decor.bottom-right {
+    bottom: 0;
+    right: 0;
+    width: 40vw;
+    max-width: 400px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=') no-repeat center/cover;
+  }
+
+  /* 🏮 Lồng đèn */
+  .lantern {
+    position: absolute;
+    bottom: -80px;
+    width: 8vw;
+    height: 10vw;
+    max-width: 72px;
+    max-height: 96px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, #ffe7a6, #ffc251);
+    box-shadow: 0 0 10px 4px rgba(255, 190, 60, 0.55);
+    transform-origin: 50% 0;
+    animation: rise 10s linear infinite, swing 4.2s ease-in-out infinite;
+  }
+  .lantern::before {
+    content: '';
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(var(--accent), #e07a00);
+    transform: translateX(-50%);
+  }
+  .lantern::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    width: 14px;
+    height: 20px;
+    border-radius: 50% / 70% 70% 30% 30%;
+    background: radial-gradient(circle at 50% 0%, #fff 20%, #ffd166 40%, rgba(255, 160, 0, 0.35) 70%);
+    animation: flicker 0.9s infinite alternate;
+    transform: translateX(-50%);
+  }
+  @keyframes flicker {
+    from { transform: scale(1) translateX(-50%); }
+    to { transform: scale(1.08) translateX(-50%); }
+  }
+  @keyframes rise {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120vh); }
+  }
+  @keyframes swing {
+    0% { rotate: -4deg; }
+    50% { rotate: 4deg; }
+    100% { rotate: -4deg; }
+  }
+
+  /* 🎑 Icon treo dưới mặt trăng */
+  .center-icons {
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    display: flex;
+    gap: min(6vw, 60px);
+    align-items: flex-start;
+    z-index: 5;
+  }
+  .hang {
+    position: relative;
+    display: inline-block;
+    animation: sway 4s ease-in-out infinite;
+    transform-origin: 50% -60px;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
+  }
+  .hang::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(#ffe186, #ffd166);
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px #ffd166;
+  }
+  .hang img {
+    width: min(16vw, 140px);
+    height: auto;
+    border-radius: 14px;
+    user-select: none;
+    pointer-events: auto;
+  }
+  @keyframes sway {
+    0% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+    100% { transform: rotate(-3deg); }
+  }
+  .hang:nth-child(2) { animation-duration: 5s; }
+
+  /* 🌟 Popup phát sáng */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 20;
+}
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.card {
+  width: min(90vw, 460px);
+  border-radius: 18px;
+  background: rgba(25, 25, 50, 0.85);
+  border: 2px solid rgba(255, 220, 130, 0.8);
+  box-shadow: 0 0 25px 8px rgba(255, 220, 130, 0.5),
+              inset 0 0 40px rgba(255, 240, 190, 0.15);
+  text-align: center;
+  display: flex;
+  flex-direction: column;   /* ✅ cho phép nội dung tự giãn theo chiều dọc */
+  overflow: visible;        /* ✅ cho phép hiển thị hết lời chúc */
+  transform: scale(0.9);
+  animation: fadeInCard 0.4s ease forwards;
+}
+
+.card-image {
+  width: 100%;
+  max-height: 320px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center,
+              rgba(255,255,255,0.05), rgba(0,0,0,0.5));
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* hiển thị đầy đủ hình */
+  border-bottom: 1px solid rgba(255, 255, 200, 0.3);
+  border-radius: 12px 12px 0 0;
+  filter: brightness(1.05);
+}
+
+.card-content {
+  padding: 22px 28px 28px;
+  background: rgba(10,10,25,0.5);
+  border-top: 1px solid rgba(255,255,200,0.2);
+  flex-grow: 1; /* ✅ giúp phần text tự dãn theo nội dung */
+}
+
+.card-content h2 {
+  color: #ffe9a6;
+  text-shadow: 0 0 12px rgba(255, 215, 130, 0.8);
+  margin-bottom: 12px;
+}
+
+.card-content p {
+  color: #fffbea;
+  font-size: clamp(16px, 3.5vw, 20px);
+  line-height: 1.6;
+  white-space: normal;  /* ✅ đảm bảo xuống dòng đầy đủ */
+  overflow-wrap: break-word;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+  /* ✨ Sao */
+  .star {
+    position: absolute;
+    width: 1.5px;
+    height: 1.5px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 3px white;
+    animation: twinkle 2s infinite ease-in-out;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* 🎶 Nút nhạc */
+  #music-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+    font-size: 1rem;
+  }
+  #music-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Media Queries cho điện thoại */
+  @media (max-width: 600px) {
+    .moon {
+      width: 50vw;
+      height: 50vw;
+    }
+    .hangnga {
+      width: 80vw;
+      max-width: 400px;
+    }
+    .decor.top-left, .decor.bottom-right {
+      width: 30vw;
+      max-width: 300px;
+    }
+    .lantern {
+      width: 10vw;
+      height: 13vw;
+      max-width: 60px;
+      max-height: 80px;
+    }
+    .hang img {
+      width: min(24vw, 128px);
+    }
+    #music-btn {
+      top: 5px;
+      right: 5px;
+      padding: 6px 10px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="moon"></div>
+  <img class="decor top-left" src="may2.11.png" alt="mây trái" />
+  <img class="decor bottom-right" src="may2.22.png" alt="mây phải" />
+  <img class="hangnga" src="hna33.png" alt="Hằng Nga" />
+
+  <div class="center-icons">
+    <a class="hang" id="icon1"><img src="kylan1.png" alt="Icon 1"></a>
+    <a class="hang" id="icon2"><img src="banhtt1.png" alt="Icon 2"></a>
+  </div>
+
+<div class="modal" id="modal">
+  <div class="card">
+    <button class="close-btn" id="closeModal">✖</button>
+    
+    <div class="card-image">
+      <img id="cardImg" src="" alt="Thiệp Trung Thu">
+    </div>
+
+    <div class="card-content">
+      <h2 id="modalTitle">Lời chúc đặc biệt</h2>
+      <p id="modalText">Chúc bạn Trung Thu rực rỡ, an vui và đoàn viên bên gia đình! 🎑</p>
+    </div>
+  </div>
+</div>
+
+  <button id="music-btn">🎵 Phát nhạc</button>
+
+  <audio id="bgm" preload="auto" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mpeg">
+    <source src="https://www.bensound.com/bensound-music/bensound-sunny.ogg" type="audio/ogg">
+    Trình duyệt của bạn không hỗ trợ audio.
+  </audio>
+
+ <script>
+/* ============== CẤU HÌNH NHANH ============== */
+const STAR_COUNT = 140;           // số sao
+const LANTERN_BASE = 16;          // số lồng đèn tạo sẵn
+const WISHES = [
+  'Chúc Chang luôn vui vẻ 🎑',
+  'Trăng rằm sáng tỏ, vạn sự hanh thông 🌕',
+  'Gia đình ấm áp, yêu thương đủ đầy 💛',
+  'Chúc Chang công việc thuận lợi, tài lộc dồi dào 💼✨',
+  'Chúc Chang bình an – Hạnh phúc – May mắn đến với bạn 🌟',
+  'Chúc Chang sớm đạt được tất cả mục tiêu',
+  'Chúc Chang luôn xinh đẹp và rạng rỡ như ánh trăng 🌙',
+];
+
+/* ============== SAO NỀN ============== */
+(function createStars(){
+  const frag = document.createDocumentFragment();
+  for (let i=0;i<STAR_COUNT;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random()*100 + '%';
+    s.style.top  = Math.random()*100 + '%';
+    s.style.opacity = (0.3 + Math.random()*0.7).toFixed(2);
+    s.style.animationDuration = (1.8 + Math.random()*2.4) + 's';
+    s.style.animationDelay    = (Math.random()*2) + 's';
+    s.style.zIndex = 0; // luôn ở nền sau cùng
+    frag.appendChild(s);
+  }
+  document.body.appendChild(frag);
+})();
+
+/* ============== LỒNG ĐÈN BAY + CLICK RA LỜI CHÚC ============== */
+function spawnLantern(leftPct){
+  const l = document.createElement('div');
+  l.className = 'lantern';
+  l.style.left = (leftPct ?? Math.random()*100) + '%';
+  const riseDur  = 11000 + Math.random()*7000;
+  const swingDur = 3600  + Math.random()*1800;
+  l.style.animationDuration = `${riseDur}ms, ${swingDur}ms`;
+  l.style.zIndex = 1;
+  l.addEventListener('animationiteration', (ev)=>{
+    if (ev.animationName === 'rise') {
+      l.style.left = Math.random()*100 + '%';
+    }
+  });
+  // click vào lồng đèn -> mở modal với lời chúc ngẫu nhiên
+  l.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    showModal('Lời chúc từ Lồng đèn', WISHES[Math.floor(Math.random()*WISHES.length)]);
+  });
+  document.body.appendChild(l);
+}
+for(let i=0;i<LANTERN_BASE;i++) spawnLantern();
+window.addEventListener('click', (e)=>{
+  const isIcon = e.target.closest('.center-icons, .modal, #music-btn');
+  if (!isIcon) {
+    const left = (e.clientX / window.innerWidth) * 100;
+    spawnLantern(left);
+  }
+});
+
+/* ============== POPUP LỜI CHÚC & ICON ĐẶC BIỆT ============== */
+// Lấy phần tử modal
+const modal   = document.getElementById('modal');
+const cardImg = document.getElementById('cardImg');
+const titleEl = document.getElementById('modalTitle');
+const textEl  = document.getElementById('modalText');
+const closeBtn = document.getElementById('closeModal');
+
+// Hàm hiển thị thiệp
+function showCard(imgSrc, title, ...messages) {
+  document.getElementById('cardImg').src = imgSrc;
+  document.getElementById('modalTitle').textContent = title;
+  
+  // nối các câu thành nhiều dòng
+  const text = messages.map(line => `<p>${line}</p>`).join('');
+  document.getElementById('modalText').innerHTML = text;
+
+  modal.classList.add('show');
+}
+// 🧧 Xử lý đóng thiệp
+closeBtn.addEventListener('click', () => {
+  modal.classList.remove('show'); // ẩn thiệp khi bấm nút ✖
+});
+
+// Đóng thiệp khi click ra ngoài vùng thiệp
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.classList.remove('show');
+  }
+});
+
+
+// 📸 Icon 1 – Lân Vàng
+document.getElementById('icon1').addEventListener('click', e => {
+  e.preventDefault();
+  showCard(
+    'lan.png', // ảnh thiệp Lân
+    'Lời chúc từ Lân Vàng 🦁','Biết ngay bạn sẽ thích cái này mà !',
+    'Nhìn bạn như này thầy kỳ lân phán không nghèo được đâu 😂💛',
+    'Chúc bạn sự nghiệp, học tập hanh thông tiến tới thành công',
+    'Chúc nếu sau bạn không giàu thì chụp cái này quay lại toai bồi thường cho hihi',
+    'Chúc bạn Trung Thu vui vẻ, hạnh phúc',
+  );
+});
+
+// 📸 Icon 2 – Bánh Trung Thu
+document.getElementById('icon2').addEventListener('click', e => {
+  e.preventDefault();
+  showCard(
+    'tho.png', // ảnh thiệp Bánh
+    'Tên thỏ thì phải chọn cái có con thỏ chứ nhỉ !! 🐇',
+    'Lời chúc từ Bánh Trung Thu 🥮',
+    'Bánh ngọt trao tay, gửi tặng niềm vui',
+    'Trung Thu trọn vẹn, đoàn viên ngập tràn',
+    'Chúc bạn yêu thương, hạnh phúc và bình an 💛🌙',
+    'Dù biết hơi thừa nhng chúc bạn luôn xinh đẹp vui vẻ như ánh trăng rằm',
+    'Trăng tròn viên mãn, hạnh phúc đong đầy. Chúc bạn ngọt ngào, ấm áp bên người thân yêu! 💛🌙'
+  );
+});
+
+/* ============== NÚT NHẠC ============== */
+const bgm   = document.getElementById('bgm');
+const mBtn  = document.getElementById('music-btn');
+mBtn.addEventListener('click', async ()=>{
+  if (bgm.paused){ try{ await bgm.play(); }catch{} mBtn.textContent='⏸ Tạm dừng'; }
+  else { bgm.pause(); mBtn.textContent='🎵 Phát nhạc'; }
+});
+window.addEventListener('load', async ()=>{
+  try{ await bgm.play(); mBtn.textContent='⏸ Tạm dừng'; }
+  catch{ mBtn.textContent='🎵 Phát nhạc'; }
+});
+</script>
+
+
+</body>
+</html>
