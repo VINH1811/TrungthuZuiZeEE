@@ -393,7 +393,7 @@ const WISHES = [
   'Chúc Chang công việc thuận lợi, tài lộc dồi dào 💼✨',
   'Chúc Chang bình an – Hạnh phúc – May mắn đến với bạn 🌟',
   'Chúc Chang sớm đạt được tất cả mục tiêu',
-  'Chúc Chang luôn xinh đẹp và rạng rỡ như ánh trăng 🌙',
+  'Chúc Chang luôn xinh đẹp và rạng rỡ như ánh trăng 🌙'
 ];
 
 /* ============== SAO NỀN ============== */
@@ -450,6 +450,18 @@ const cardImg = document.getElementById('cardImg');
 const titleEl = document.getElementById('modalTitle');
 const textEl  = document.getElementById('modalText');
 const closeBtn = document.getElementById('closeModal');
+// 🌕 Hiển thị popup lời chúc ngắn (dành cho lồng đèn)
+function showModal(title, text) {
+  // ẩn phần ảnh nếu đang hiện thiệp
+  document.querySelector('.card-image').style.display = 'none';
+  
+  // đặt tiêu đề và lời chúc
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').innerHTML = `<p>${text}</p>`;
+  
+  // hiển thị popup
+  modal.classList.add('show');
+}
 
 // Hàm hiển thị thiệp
 function showCard(imgSrc, title, ...messages) {
